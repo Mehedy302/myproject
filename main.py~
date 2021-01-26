@@ -1,7 +1,7 @@
 from flask import Flask, render_template, abort, request
 import sys
 from twython import Twython
-import nltk
+ 
 from dictionary import Dictionary
 from textblob import TextBlob
 import pymongo
@@ -163,5 +163,6 @@ def root():
 def page_not_found(e):
     return render_template('404.html'), 404
 
-
-app.run(debug=True)
+if __name__ == '__main__':
+    # Threaded option to enable multiple instances for multiple user access support
+    app.run(threaded=True, port=5000)
