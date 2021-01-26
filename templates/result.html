@@ -1,0 +1,177 @@
+{% extends 'main.html' %}
+
+
+{% block body %}
+ 
+<body>
+<center>
+ 
+<h5>Results for Twitter username  {{ username[1:] }}</h5>
+</center>
+ 
+  </body>
+
+<table >
+<tr>
+ 
+  <th><h5>Polarity</h5></th><th><h5>Result</h5></th><th><h5>Percentage</h5></th>
+</h4>
+</tr>
+   <tr><td><h5 style=" color:red;"}> Negative</h5></td>  <td  ><h5 style=" color:red;"> {{ result.neg }}   </h5>  </td>  <td> <h5 style=" color:red;"> {{  '%0.3f'|format((result.neg)/(result.neg+result.pos+result.neut)*100|float)   }}%</h5></td> </tr>
+<tr>
+
+  <td> <h5 style=" color:green;"}> Positive</h5></td><td><h5 style=" color:green;">  {{ result.pos }}  </h5>   </td><td> <h5 style=" color:green;"> 
+ {{ '%0.3f'|format((result.pos)/(result.neg+result.pos+result.neut)*100|float) }}%</h5></td></tr>
+  <tr><td> <h5 style=" color:blue;"}> Neutral</h5></td><td> <h5 style=" color:blue;"}> {{ result.neut }}</h5>     </td><td><h5 style=" color:blue;"}>{{ '%0.3f'|format((result.neut)/(result.neg+result.pos+result.neut)*100|float) }}%</h5></td></tr>
+    
+      
+</table> 
+       <h4>Pie Chart</h4>  
+
+    <div class="ct-chart ct-perfect-fourth"></div>
+         
+
+     
+
+
+    <script>
+    var data = {
+       
+      labels: ['Negative', 'Positive', 'Neutral'],
+       
+      series: [
+        {{ result.neg }}, {{ result.pos }}, {{ result.neut }}
+      ]
+    };
+
+
+
+
+     
+    var sum = function(a, b) { return a + b };
+    new Chartist.Pie('.ct-chart', data, {
+     
+    });
+
+    </script>
+
+<h4>Negative Polarity Of Tweets</h4>
+
+<div class="ct-chart2 ct-perfect-fourth"></div>
+<script>
+var data = {
+  // A labels array that can contain any sort of values
+  //labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+  // Our series array that contains series objects or in this case series data arrays
+  series: [
+    {{ result.count_neg }}
+  ]
+};
+
+// Create a new line chart object where as first parameter we pass in a selector
+// that is resolving to our chart container element. The Second parameter
+// is the actual data object.
+new Chartist.Line('.ct-chart2', data);
+</script>
+
+<h4>Positive polarity Of Tweets</h4>
+
+<div class="ct-chart3 ct-perfect-fourth"></div>
+<script>
+var data = {
+  // A labels array that can contain any sort of values
+  //labels: [ {{ result.length_pos }} ],
+  // Our series array that contains series objects or in this case series data arrays
+  series: [
+    {{ result.count_pos  }}
+  ]
+};
+
+// Create a new line chart object where as first parameter we pass in a selector
+// that is resolving to our chart container element. The Second parameter
+// is the actual data object.
+new Chartist.Line('.ct-chart3', data);
+</script>
+
+<h4>Subjectivity Of Tweets</h4>
+
+<div class="ct-chart4 ct-perfect-fourth"></div>
+<script>
+var data = {
+  // A labels array that can contain any sort of values
+   //labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+  // Our series array that contains series objects or in this case series data arrays
+  series: [
+    {{ result.count_subj  }}
+  ]
+};
+
+// Create a new line chart object where as first parameter we pass in a selector
+// that is resolving to our chart container element. The Second parameter
+// is the actual data object.
+new Chartist.Line('.ct-chart4', data);
+</script>
+
+
+<style>
+.ct-series-a .ct-slice-pie {
+  /* fill of the pie slieces */
+  stroke: hsl(40%, 120, 80%);
+  /* give your pie slices some outline or separate them visually by using the background color here */
+  stroke: white;
+  /* outline width */
+  stroke-width: 0px;
+
+
+}
+
+.ct-series-a .ct-line {
+  /* Set the colour of this series line */
+  stroke: green;
+  /* Control the thikness of your lines */
+  stroke-width: 1px;
+width:100px
+  /* Create a dashed line with a pattern */
+  /*stroke-dasharray: 10px 20px;*/
+}
+
+table, th, td {
+  border: 0px solid black;
+    
+}
+
+td ,th{
+  text-align: center;
+}
+tr:nth-child(even) {background-color: #eff9f3;}
+tr:nth-child(odd) {background-color: #dcf9dd;}
+
+th{
+background-color: #0ff217;
+
+
+}
+
+.table {
+    border-collapse: collapse;
+   width: 100;
+}
+
+html, body {
+  width: 100%;
+}
+
+.full-height {
+  width: 100%;
+}
+  
+ 
+
+</style>
+
+  
+ 
+ 
+
+ 
+{% endblock %}
