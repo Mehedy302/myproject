@@ -1,3 +1,4 @@
+nltk==3.5
 appdirs==1.4.4
 asgiref==3.3.1
 beautifulsoup4==4.9.3
