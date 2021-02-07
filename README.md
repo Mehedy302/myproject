@@ -23,4 +23,4 @@ Run the application (defaults on port 5000) by executing:
 
 ## Support
 
-Issues? Shoot an email to [ricklamers@gmail.com](mailto:ricklamers@gmail.com)
+Issues? Shoot an email to [ricklamers@gmail.com](mailto:mdmehedy302@gmail.com)
