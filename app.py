@@ -1,12 +1,15 @@
 from flask import Flask, render_template, abort, request
 import sys
 from twython import Twython
+import os
  
 from dictionary import Dictionary
 from textblob import TextBlob
 import pymongo
 import json 
 import tweepy
+
+file1 = open("MyFile.txt","a")
 
 ckey = 'L755C7WuPy7AFnsscuONQHF9z'
 csecret = 'TCUnmYXv1L9TuKV6Lzk0ofxwh1LAGIqSvDua9vwFH1zMYGUVQn'
@@ -106,7 +109,7 @@ def sentiment_analysis(tweets):
     
 
     for tweet in tweets:
-
+        file1.write(tweet.text)
         res = sentiment(tweet.text)
         count_subj.append(res[1])
 

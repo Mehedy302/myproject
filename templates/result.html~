@@ -170,7 +170,7 @@ html, body {
 </style>
 
   
- 
+ {{ result.positive_tweets  }}
  
 
  
