@@ -8,11 +8,18 @@ from textblob import TextBlob
 import pymongo
 import json 
 import tweepy
+import pandas as pd
+import re
+import emoji
+import nltk
+nltk.download('words')
+words = set(nltk.corpus.words.words())
+
 
 file1 = open("MyFile.txt","a")
 
 ckey = 'L755C7WuPy7AFnsscuONQHF9z'
-csecret = 'TCUnmYXv1L9TuKV6Lzk0ofxwh1LAGIqSvDua9vwFH1zMYGUVQn'
+csecret = 'TCUnmYXv1L9TuKV6Lzk0ofxwh1LAGIqSvDua9vwFHs1zMYGUVQn'
 
 atoken = '1046944742393561088-uXi4ER6gyotBuxZ8orhbpbl8BVd4En'
 asecret = 'SFad097p9NTAOFb2JwZED6XZ4tVhKiD6x9urIIYdDafB6' 
@@ -45,6 +52,17 @@ class SentimentScore:
         self.pos = len(positive_tweets)
         self.neut = len(neutral_tweets)
         self.length_pos = list(range(1, len(positive_tweets)+1))
+
+
+def cleaner(tweet):
+    tweet = re.sub("@[A-Za-z0-9]+","",tweet) #Remove @ sign
+    tweet = re.sub(r"(?:\@|http?\://|https?\://|www)\S+", "", tweet) #Remove http links
+    tweet = " ".join(tweet.split())
+    tweet = ''.join(c for c in tweet if c not in emoji.UNICODE_EMOJI) #Remove Emojis
+    tweet = tweet.replace("#", "").replace("_", " ") #Remove hashtag sign but keep the text
+    #tweet = " ".join(w for w in nltk.wordpunct_tokenize(tweet) \
+         #if w.lower() in words or not w.isalpha())
+    return tweet
 
 
 
@@ -109,18 +127,18 @@ def sentiment_analysis(tweets):
     
 
     for tweet in tweets:
-        file1.write(tweet.text)
-        res = sentiment(tweet.text)
+        file1.write(cleaner(tweet.text))
+        res = sentiment(cleaner(tweet.text))
         count_subj.append(res[1])
 
         if res[0] < 0:
-            negative_tweets.append(tweet.text )
+            negative_tweets.append(cleaner(tweet.text))
             count_neg.append(res[0])
         elif res[0] > 0:
-            positive_tweets.append(tweet.text )
+            positive_tweets.append(cleaner(tweet.text))
             count_pos.append(res[0])
         else:
-            neutral_tweets.append(tweet.text )
+            neutral_tweets.append(cleaner(tweet.text))
 
     return SentimentScore(positive_tweets, negative_tweets, neutral_tweets,count_pos,count_neg,count_subj)
 
